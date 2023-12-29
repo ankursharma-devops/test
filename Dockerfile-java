@@ -9,8 +9,6 @@ LABEL com.alteryx.golden-container-base-images.ayx-java.java.version="jdk-11"
 
 #Below comment line is used by renovate bot for automated MR creation in case of software version update.
 #renovate: datasource=repology depName=ubuntu_20_04/openjdk-lts versioning=deb
-
-#Below line is used and updated by renovate bot.
 ENV JAVA_VERSION="11.0.20.1+1-0ubuntu1~20.04"
 
 #Add non-root user

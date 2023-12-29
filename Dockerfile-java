@@ -1,0 +1,31 @@
+FROM ubuntu:20.04
+
+ARG USERNAME=ayx-java
+ARG GROUPNAME=$USERNAME
+
+#Labels for the docker image
+LABEL description="golden docker image for java jdk-11 version"
+LABEL com.alteryx.golden-container-base-images.ayx-java.java.version="jdk-11"
+
+#Below comment line is used by renovate bot for automated MR creation in case of software version update.
+#renovate: datasource=repology depName=ubuntu_20_04/openjdk-lts versioning=deb
+
+#Below line is used and updated by renovate bot.
+ENV JAVA_VERSION="11.0.20.1+1-0ubuntu1~20.04"
+
+#Add non-root user
+RUN groupadd -r $GROUPNAME  && useradd -r -g $GROUPNAME $USERNAME
+
+#Install openjdk-jdk11
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends openjdk-11-jdk-headless=$JAVA_VERSION \
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/*
+
+#Use non-root user
+USER $USERNAME 
+
+#Set Work dir
+WORKDIR /home/$USERNAME/app
+
+CMD ["java"]
